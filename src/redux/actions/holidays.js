@@ -28,12 +28,10 @@ export function getHolidaysFromAPI(city="PT"){
                 country: city,
                 year: today.getFullYear(),
                 month: today.getMonth() + 1,
-                // // day: today.getDate(),
                  after: 1
             }
         })
             .then((response) => {
-                //console.log(response.data)
                 dispatch(endHolidaysRequest(transformData(response.data)))
             })
             .catch((err) => {

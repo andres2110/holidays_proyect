@@ -4,12 +4,11 @@ import { useDispatch } from "react-redux";
 
 export default function Holiday(props){
     const [isFavorite,setFavorite] = React.useState(props.isFavorite)
+    const fnDispatch = useDispatch()
     const styles ={
         backgroundColor: "#92DCCD",
         color: "white"
     }
-
-    const fnDispatch = useDispatch()
     //FUNCTIONS
     function handle(){
         setFavorite((prev)=>!prev)

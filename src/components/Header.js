@@ -2,28 +2,35 @@ import React from "react"
 import { useDispatch } from "react-redux"
 import { chageCityOfHolidays } from "../redux/actions/holidays"
 export default function Header() {
+    const data = [
+        {value:'US',text:'United States'},
+        {value:'PT',text:'Portugal'},
+        {value:'ES',text:'Spain'},
+        {value:'PL',text:'Poland'},
+        {value:'EC',text:'Ecuador'},
+    ]
+
+    const cities = data.map((city)=>{
+        return (<option value={city.value} key={city.value}>{city.text}</option>)
+    })
 
     const [cityCode,setCityCode] = React.useState('PT')
-    
     const fnDispatch = useDispatch();
-    React.useEffect(() => {
-        fnDispatch(chageCityOfHolidays(cityCode))
-    }, [cityCode,fnDispatch])
+    // React.useEffect(() => {
+    //     fnDispatch(chageCityOfHolidays(cityCode))
+    // }, [cityCode,fnDispatch])
 
     
     function handleChange(event){
         setCityCode(event.target.value)
+        fnDispatch(chageCityOfHolidays(event.target.value))
     }
     return (
 
         <header className="header">
             <h2 className="header--title">Next Holiday</h2>
             <select id="cities" onChange={handleChange} value={cityCode}>
-                <option value="US">United States</option>
-                <option value="PT">Portugal</option>
-                <option value="ES">Spain</option>
-                <option value="PL">Poland</option>
-                <option value="EC">Ecuador</option>
+               {cities}
             </select>
         </header>
     )

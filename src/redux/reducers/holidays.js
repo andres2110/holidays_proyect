@@ -43,21 +43,26 @@ export default function holidays(state = initialState, action) {
 }
 
 function getFavorites(state, id) {
-    let newFavorites = []//state.favoritesInfo
+    let newFavorites = state.favoritesInfo
     let numberFavorites = 0
     let holidaysNew = state && state.holidaysAll && state.holidaysAll.length
         ? state.holidaysAll.map((holiday) => {
             let newHoliday = holiday.id === id ? { ...holiday, isFavorite: !holiday.isFavorite } : { ...holiday }
+            let isFavorite = newFavorites.filter((holidayFav)=>holidayFav.id === newHoliday.id ).length
+            console.log(isFavorite)
             if (newHoliday.isFavorite) {
                 numberFavorites = numberFavorites + 1
-                let haveFavorite = newFavorites.filter((holiday)=>holiday.id === id ) <= 0
-                if (haveFavorite) {
+                if (isFavorite === 0) {
                     newFavorites.push(newHoliday)
                 }
+            }
+            else if (isFavorite > 0) { // Remove from favorites
+                newFavorites = newFavorites.filter((holidayFav)=>holidayFav.id !== newHoliday.id )
             }
             return newHoliday
         })
         : []
+    // update favorites
     return {
         holidaysNew: holidaysNew,
         numberFavorites: numberFavorites,

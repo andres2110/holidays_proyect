@@ -19,7 +19,7 @@ export default function holidays(state = initialState, action) {
             }
         case END_HOLIDAYS_REQUEST_FROM_API:
             let holidays = action.holidays
-
+            holidays = changeHolidays(holidays,state.favoritesInfo)
             return {
                 ...state,
                 holidaysAll: holidays
@@ -29,30 +29,30 @@ export default function holidays(state = initialState, action) {
             return {
                 ...state,
                 cityCode: city,
-                favorites: 0,
             }
         case CHANGE_FAVORITE_HOLIDAY:
             const data = getFavorites(state, action.idHoliday)
             return {
                 ...state,
                 holidaysAll: data.holidaysNew,
-                favorites: data.numberFavorites,
+                favorites: data.newFavorites.length,
                 favoritesInfo: data.newFavorites
             }
+        default:
+            return state;
     }
 }
 
-function getFavorites(state, id) {
+ const getFavorites = (state, id) => {
     let newFavorites = state.favoritesInfo
-    let numberFavorites = 0
+    // let numberFavorites = 0
     let holidaysNew = state && state.holidaysAll && state.holidaysAll.length
         ? state.holidaysAll.map((holiday) => {
             let newHoliday = holiday.id === id ? { ...holiday, isFavorite: !holiday.isFavorite } : { ...holiday }
             let isFavorite = newFavorites.filter((holidayFav)=>holidayFav.id === newHoliday.id ).length
-            console.log(isFavorite)
             if (newHoliday.isFavorite) {
-                numberFavorites = numberFavorites + 1
-                if (isFavorite === 0) {
+                // numberFavorites = numberFavorites + 1
+                if (isFavorite ===0) {
                     newFavorites.push(newHoliday)
                 }
             }
@@ -65,7 +65,16 @@ function getFavorites(state, id) {
     // update favorites
     return {
         holidaysNew: holidaysNew,
-        numberFavorites: numberFavorites,
         newFavorites: newFavorites,
     }
+}
+
+const changeHolidays = (holidays,favoritesInfo) =>{
+    
+    let newHolidays = holidays.map((holiday)=>{
+        let newHolidayArr = favoritesInfo.filter((favHoliday)=>favHoliday.id === holiday.id)
+        return newHolidayArr.length===0? {...holiday}: { ...newHolidayArr[0]} 
+    })
+    return newHolidays
+    
 }

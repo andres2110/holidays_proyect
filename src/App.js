@@ -1,7 +1,8 @@
 import './App.css';
-import Header from './components/Header';
+import Header from './components/commons/Header';
 import React from 'react'
-import Main from './components/Main';
+import HomePage from './pages/HomePage';
+import Favorites from './pages/Favorites'
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 function App() {
   return (
@@ -9,8 +10,8 @@ function App() {
       <Router>
       <Header />
         <Routes>
-          <Route path='/' element={<Main/>}/>
-          <Route/>
+          <Route path='/' element={<HomePage/>}/>
+          <Route path='/favorites' element={<Favorites/>}/>
         </Routes>
       </Router>
     </div>

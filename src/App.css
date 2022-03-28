@@ -7,7 +7,7 @@ body {
 }
 
 /* HEADER - Start */
-.header {
+/* .header {
   display: flex;
   align-items: center;
   height: 65px;
@@ -29,18 +29,18 @@ body {
   color: white;
   font-family: 'Nunito', sans-serif;
   font-size: 18px;
-  border-color: #92DCCD;
-}
-/* HEADER - END*/
+  border-color: #92DCCD; 
+  
+*/
 
 /* MAIN */
-.container {
+/* .container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
+} */
+/* 
 .holidays {
     margin-top: 20px;
     display: grid;
@@ -48,9 +48,9 @@ body {
     gap: 20px;
     justify-content: center;
     align-items: center;
-}
+} */
 
-.holiday-card {
+/* .holiday-card {
   width: 125px;
   height: 125px;
   background-color: #FFE9CA;
@@ -58,10 +58,9 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center; 
-}
-
+} */
+/* 
 .holiday-card > h3, h4  {
-  /* color: #CAC194; */
   text-align: center;
   font-weight: 400;
   margin: 0px auto 0px;
@@ -72,7 +71,7 @@ body {
   margin-top: auto;
   margin-bottom: 5px;
   font-size: 20px;
-  width: 50px;
+  width: 40px;
   border-radius: 200%;
   background-color: #92DCCD;
-}
+} */

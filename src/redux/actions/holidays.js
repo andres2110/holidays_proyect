@@ -13,7 +13,7 @@ const endHolidaysRequest = recivedResponse => ({
 
 const transformData = data => {
     return data.holidays.map((holiday)=>{
-        return ({id:holiday.id,name:holiday.name,date:holiday.date,isFavorite: false})
+        return ({id:holiday.id,name:holiday.name,date:holiday.date,isFavorite: false,country:holiday.country })
     })
 };
 

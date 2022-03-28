@@ -1,7 +1,7 @@
 import React from "react";
-import Main from "../../components/Main";
+import Main from "../../components/homepage/Main";
 
 
 export default function HomePage(){
-    return (<HomePage/>)
+    return (<Main/>)
 }

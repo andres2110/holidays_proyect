@@ -1,6 +1,7 @@
 import React from "react"
 import Holiday from './Holiday';
 import styled from "styled-components";
+import { getMonthText } from "../../resources/helpers";
 
 const S = {
     HolidaysContainer: styled.div`
@@ -30,14 +31,18 @@ export default function ListOFHolidays(props) {
             {props.holidays.length > 0
                 ?
                 props.holidays.map((holiday) => {
-                    let iNumberDate = holiday.date.split('-')[2] !== undefined ? holiday.date.split('-')[2] : ''
+                    // let iNumberDate = holiday.date.split('-')[2] !== undefined ? holiday.date.split('-')[2] : ''
+                    let oDate = new Date(holiday.date)
+                    let sMonth = props.printMonth ? getMonthText(oDate.getMonth()):''
                     return (
                         <Holiday
                             name={holiday.name}
-                            date={iNumberDate}
+                            date={oDate.getDate()}
                             key={holiday.id}
                             isFavorite={holiday.isFavorite}
-                            id={holiday.id} />
+                            id={holiday.id} 
+                            month = {sMonth}
+                            />
                     )
                 })
                 : 

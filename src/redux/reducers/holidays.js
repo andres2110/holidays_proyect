@@ -6,12 +6,14 @@ import {
     CHANGE_FAVORITE_HOLIDAY
 } from "../actionTypes";
 
+import { DEFAULT_MONTH, DEFAULT_COUNTRY } from "../../resources/constants"; 
+
 const initialState = {
     holidaysAll: [],
-    country: "PT",
+    country: DEFAULT_COUNTRY,
     favoritesLength: 0,
     favoritesInfo: [],
-    currentMonth: 2
+    currentMonth: DEFAULT_MONTH
 };
 
 

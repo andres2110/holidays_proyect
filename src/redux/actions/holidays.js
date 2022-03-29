@@ -5,7 +5,7 @@ import {
     CHANGE_FAVORITE_HOLIDAY,
     CHANGE_MONTH_OF_HOLIDAY
 } from "../actionTypes";
-import { API_KEY, API_URL } from "../../resources/constants";
+import { API_KEY, API_URL, DEFAULT_COUNTRY } from "../../resources/constants";
 import axios from "axios";
 
 const startHolidaysRequest = () => ({
@@ -29,7 +29,7 @@ const transformData = data => {
     })
 };
 
-export function getHolidaysFromAPI(country = "PT", month = new Date().getMonth()) {
+export function getHolidaysFromAPI(country = DEFAULT_COUNTRY, month = new Date().getMonth()) {
     let today = new Date();
     return dispatch => {
         dispatch(startHolidaysRequest());
@@ -53,7 +53,7 @@ export function getHolidaysFromAPI(country = "PT", month = new Date().getMonth()
 
 export const chageCountryOfHolidays = country => ({
     type: CHANGE_COUNTRY_OF_HOLIDAYS,
-    country: country ? country : 'PT',
+    country: country ? country : DEFAULT_COUNTRY,
 })
 
 export const chageFavorite = id => ({

@@ -19,6 +19,9 @@ const S = {
      justify-content: center;
      align-items: center;
   `,
+  FavoritesCount: styled.div`
+    margin-left: 10px;
+  `
 }
 export default function Main() {
   let oInfoRequest = useSelector(getInfoToDisplay)
@@ -34,9 +37,9 @@ export default function Main() {
       <S.SubHeaderWrapper>
         <Month month={oInfoRequest.month} />
         <Select country={oInfoRequest.country} />
+        <S.FavoritesCount> {`Favorite Holidays: ${iNumFavorites}`} </S.FavoritesCount>
       </S.SubHeaderWrapper>
-      <ListOfHolidays holidays={aHolidaysToDisplay} gridSize={7} />
-      <div> {`Favorite Holidays: ${iNumFavorites}`} </div>
+      <ListOfHolidays holidays={aHolidaysToDisplay} gridSize={7} printMonth ={false}/>
     </S.Container>
   )
 }

@@ -16,16 +16,16 @@ const S = {
     `
 }
 export default function Select(props) {
-    const [cityCode, setCityCode] = React.useState(props.country)
+    const [country, setCountry] = React.useState(props.country)
     const fnDispatch = useDispatch();
     const fnHandleChange = (event) => {
         fnDispatch(chageCountryOfHolidays(event.target.value))
-        setCityCode(event.target.value)
+        setCountry(event.target.value)
     }
     return (
-        <S.SelectWrapper onChange={fnHandleChange} value={cityCode}>
-            {countries.map((city) => {
-                return (<option value={city.value} key={city.value}>{city.text}</option>)
+        <S.SelectWrapper onChange={fnHandleChange} value={country}>
+            {countries.map((country) => {
+                return (<option value={country.value} key={country.value}>{country.text}</option>)
             })}
         </S.SelectWrapper>
 

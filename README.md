@@ -28,7 +28,7 @@ Step for use:
  2. Change the API_KEY in src/resources/constants.js for that yours
  2. npm install
  3. npm start
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+ 4. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 ## Difficulties
 

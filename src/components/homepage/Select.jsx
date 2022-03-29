@@ -1,6 +1,6 @@
 import React from "react"
 import { useDispatch } from "react-redux"
-import { chageCityOfHolidays } from "../../redux/actions/holidays"
+import { chageCountryOfHolidays } from "../../redux/actions/holidays"
 import { countries } from '../../resources/constants'
 import styled from "styled-components"
 const S = {
@@ -15,12 +15,12 @@ const S = {
     border-color: #92DCCD;
     `
 }
-export default function Select() {
-    const [cityCode, setCityCode] = React.useState('PT')
+export default function Select(props) {
+    const [cityCode, setCityCode] = React.useState(props.country)
     const fnDispatch = useDispatch();
     const fnHandleChange = (event) => {
+        fnDispatch(chageCountryOfHolidays(event.target.value))
         setCityCode(event.target.value)
-        fnDispatch(chageCityOfHolidays(event.target.value))
     }
     return (
         <S.SelectWrapper onChange={fnHandleChange} value={cityCode}>

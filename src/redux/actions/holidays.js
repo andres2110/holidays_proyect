@@ -1,5 +1,11 @@
-import { START_HOLIDAYS_REQUEST_FROM_API, END_HOLIDAYS_REQUEST_FROM_API,CHANGE_CITY_OF_HOLIDAYS
-,CHANGE_FAVORITE_HOLIDAY} from "../actionTypes";
+import {
+    START_HOLIDAYS_REQUEST_FROM_API,
+    END_HOLIDAYS_REQUEST_FROM_API,
+    CHANGE_COUNTRY_OF_HOLIDAYS,
+    CHANGE_FAVORITE_HOLIDAY,
+    CHANGE_MONTH_OF_HOLIDAY
+} from "../actionTypes";
+import { API_KEY, API_URL } from "../../resources/constants";
 import axios from "axios";
 
 const startHolidaysRequest = () => ({
@@ -12,23 +18,28 @@ const endHolidaysRequest = recivedResponse => ({
 });
 
 const transformData = data => {
-    return data.holidays.map((holiday)=>{
-        return ({id:holiday.id,name:holiday.name,date:holiday.date,isFavorite: false,country:holiday.country })
+    return data.holidays.map((holiday) => {
+        return ({
+            id: holiday.id,
+            name: holiday.name,
+            date: holiday.date,
+            isFavorite: false,
+            country: holiday.country
+        })
     })
 };
 
-export function getHolidaysFromAPI(city="PT"){
-    const url = "https://api.getfestivo.com/v2/holidays"
+export function getHolidaysFromAPI(country = "PT", month = new Date().getMonth()) {
     let today = new Date();
     return dispatch => {
         dispatch(startHolidaysRequest());
-        return axios.get(url, {
+        return axios.get(API_URL, {
             params: {
-                api_key: "ee12eeea09fc3b3ce72f39ab8f67961f",
-                country: city,
+                api_key: API_KEY,
+                country: country,
                 year: today.getFullYear(),
-                month: today.getMonth() + 1,
-                 after: 1
+                month: month + 1,
+                after: 1
             }
         })
             .then((response) => {
@@ -40,12 +51,17 @@ export function getHolidaysFromAPI(city="PT"){
     }
 }
 
-export const chageCityOfHolidays = cityCode =>({
-    type: CHANGE_CITY_OF_HOLIDAYS,
-    city: cityCode ? cityCode: "PT",
+export const chageCountryOfHolidays = country => ({
+    type: CHANGE_COUNTRY_OF_HOLIDAYS,
+    country: country ? country : 'PT',
 })
 
-export const chageFavorite= id =>({
+export const chageFavorite = id => ({
     type: CHANGE_FAVORITE_HOLIDAY,
-    idHoliday: id? id: '',
+    idHoliday: id ? id : '',
+})
+
+export const changeMonthOfHolidays = month => ({
+    type: CHANGE_MONTH_OF_HOLIDAY,
+    month: month ? month : 0
 })

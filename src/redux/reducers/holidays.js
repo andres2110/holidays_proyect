@@ -1,13 +1,17 @@
 import {
-    START_HOLIDAYS_REQUEST_FROM_API, END_HOLIDAYS_REQUEST_FROM_API, CHANGE_CITY_OF_HOLIDAYS,
+    START_HOLIDAYS_REQUEST_FROM_API,
+    END_HOLIDAYS_REQUEST_FROM_API,
+    CHANGE_COUNTRY_OF_HOLIDAYS,
+    CHANGE_MONTH_OF_HOLIDAY,
     CHANGE_FAVORITE_HOLIDAY
 } from "../actionTypes";
 
 const initialState = {
     holidaysAll: [],
-    cityCode: "PT",
+    country: "PT",
     favoritesLength: 0,
     favoritesInfo: [],
+    currentMonth: 2
 };
 
 
@@ -19,22 +23,28 @@ export default function holidays(state = initialState, action) {
             }
         case END_HOLIDAYS_REQUEST_FROM_API:
             let aHolidays = action.holidays
-            aHolidays = changeHolidays(aHolidays,state.favoritesInfo)
+            aHolidays = changeHolidays(aHolidays, state.favoritesInfo)
             return {
                 ...state,
                 holidaysAll: aHolidays
             }
-        case CHANGE_CITY_OF_HOLIDAYS:
-            let sCity = action.city;
+        case CHANGE_COUNTRY_OF_HOLIDAYS:
+            let sCountry = action.country;
             return {
                 ...state,
-                cityCode: sCity,
+                country: sCountry,
+            }
+        case CHANGE_MONTH_OF_HOLIDAY:
+            let iMonth = action.month;
+            return {
+                ...state,
+                currentMonth: iMonth,
             }
         case CHANGE_FAVORITE_HOLIDAY:
             const oData = getFavorites(state, action.idHoliday)
             return {
                 ...state,
-                holidaysAll: oData.newHoliday,
+                holidaysAll: oData.newHolidays,
                 favoritesLength: oData.newFavorites.length,
                 favoritesInfo: oData.newFavorites
             }
@@ -43,36 +53,30 @@ export default function holidays(state = initialState, action) {
     }
 }
 
- const getFavorites = (state, id) => {
-    let aNewFavorites= state.favoritesInfo
-    let aHolidays = state && state.holidaysAll && state.holidaysAll.length
-        ? state.holidaysAll.map((holiday) => {
-            let oHoliday = holiday.id === id ? { ...holiday, isFavorite: !holiday.isFavorite } : { ...holiday }
-            let iFavoritesLen = aNewFavorites.filter((holidayFav)=>holidayFav.id === oHoliday.id ).length
-            if (oHoliday.isFavorite) {
-                if (iFavoritesLen===0) {
-                    aNewFavorites.push(oHoliday)
-                }
-            }
-            else if (iFavoritesLen > 0) { // Remove from favorites
-                aNewFavorites = aNewFavorites.filter((holidayFav)=>holidayFav.id !== oHoliday.id )
-            }
-            return oHoliday
-        })
-        : []
-    // update favorites
+const getFavorites = (state, id) => {
+    let aNewFavorites = state.favoritesInfo
+    let aHolidays = state.holidaysAll
+    let iIndexFavorite = aNewFavorites.findIndex((favorite) => favorite.id === id)
+    let iIndexHoliday = aHolidays.findIndex((holiday) => holiday.id === id)
+    if (iIndexFavorite < 0) {
+        if (iIndexHoliday > -1) aHolidays[iIndexHoliday].isFavorite = !aHolidays[iIndexHoliday].isFavorite
+        aNewFavorites.push(aHolidays[iIndexHoliday])
+    } else {
+        aNewFavorites = aNewFavorites.filter((favorite) => favorite.id !== id)
+        if (iIndexHoliday > -1) aHolidays[iIndexHoliday].isFavorite = !aHolidays[iIndexHoliday].isFavorite
+    }
     return {
-        newHoliday: aHolidays,
+        newHolidays: aHolidays,
         newFavorites: aNewFavorites,
     }
 }
 
-const changeHolidays = (holidays,favoritesInfo) =>{
-    
-    let newHolidays = holidays.map((holiday)=>{
-        let newHolidayArr = favoritesInfo.filter((favHoliday)=>favHoliday.id === holiday.id)
-        return newHolidayArr.length===0? {...holiday}: { ...newHolidayArr[0]} 
+const changeHolidays = (holidays, favoritesInfo) => {
+
+    let newHolidays = holidays.map((holiday) => {
+        let newHolidayArr = favoritesInfo.filter((favHoliday) => favHoliday.id === holiday.id)
+        return newHolidayArr.length === 0 ? { ...holiday } : { ...newHolidayArr[0] }
     })
     return newHolidays
-    
+
 }

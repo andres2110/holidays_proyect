@@ -2,20 +2,18 @@
 import React from "react"
 import Select from "./Select";
 import ListOfHolidays from "../commons/ListOFHolidays";
-import { useSelector } from "react-redux";
-import { getNumberOfFavorites } from '../../redux/selectors'
-import { getMonth } from "../../resources/helpers";
+import { useSelector, useDispatch } from "react-redux";
+import { getNumberOfFavorites, getHolidaysToDisplay, getInfoToDisplay } from '../../redux/selectors'
+import { getHolidaysFromAPI } from "../../redux/actions/holidays";
 import styled from "styled-components";
+import Month from "./Month";
 
 const S = {
-    SubHeaderWrapper: styled.div`
+  SubHeaderWrapper: styled.div`
     display: flex;
     align-items: center;
   `,
-    SubTitle: styled.h2`
-      margin-right: 50px;
-  `,
-    Container: styled.div`
+  Container: styled.div`
      display: flex;
      flex-direction: column;
      justify-content: center;
@@ -23,15 +21,22 @@ const S = {
   `,
 }
 export default function Main() {
-    let iNumFavorites = useSelector(getNumberOfFavorites)
-    return (
-        <S.Container>
-            <S.SubHeaderWrapper>
-                <S.SubTitle>{getMonth()}</S.SubTitle>
-                <Select />
-            </S.SubHeaderWrapper>
-            <ListOfHolidays />
-            <div> {`Favorite Holidays: ${iNumFavorites}`} </div>
-        </S.Container>
-    )
+  let oInfoRequest = useSelector(getInfoToDisplay)
+  let aHolidaysToDisplay = useSelector(getHolidaysToDisplay);
+  const fnDispatch = useDispatch();
+  React.useEffect(() => {
+    fnDispatch(getHolidaysFromAPI(oInfoRequest.country, oInfoRequest.month));
+  }, [oInfoRequest.country,oInfoRequest.month,fnDispatch]); 
+
+  let iNumFavorites = useSelector(getNumberOfFavorites)
+  return (
+    <S.Container>
+      <S.SubHeaderWrapper>
+        <Month month={oInfoRequest.month} />
+        <Select country={oInfoRequest.country} />
+      </S.SubHeaderWrapper>
+      <ListOfHolidays holidays={aHolidaysToDisplay} gridSize={7} />
+      <div> {`Favorite Holidays: ${iNumFavorites}`} </div>
+    </S.Container>
+  )
 }

@@ -1,18 +1,21 @@
 import React from "react";
 import { chageFavorite } from "../../redux/actions/holidays";
 import { useDispatch } from "react-redux";
+import { StarBorder,Star } from "@mui/icons-material";
+import { yellow } from "@mui/material/colors";
 import styled from "styled-components";
 
 const S = {
     HolidayCard: styled.div`
         width: 125px;
-        height: 125px;
-        background-color: #FFE9CA;
+        height: 150px;
+        /* background-color: #FFE9CA; */
+        color: white;
         box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
         display: flex;
         flex-direction: column;
         justify-content: center; 
-        margin-bottom: 15px;
+        background-color: #92DCCD  ; 
     `,
     HolidayName: styled.h3`
         text-align: center;
@@ -35,19 +38,17 @@ const S = {
 export default function Holiday(props) {
     const [bIsFavorite, setFavorite] = React.useState(props.isFavorite)
     const fnDispatch = useDispatch()
-    const styles = {
-        backgroundColor: "#92DCCD",
-        color: "white"
-    }
-    //FUNCTIONS
-    const handle = () => {
+    const fnHandleFavorite = () => {
         setFavorite((prev) => !prev)
         fnDispatch(chageFavorite(props.id))
     }
     return (
-        <S.HolidayCard className="holiday-card"
-            style={!bIsFavorite ? styles : {}}
-            onClick={handle}>
+        <S.HolidayCard className="holiday-card" >
+         {!bIsFavorite ? 
+            (<StarBorder onClick={fnHandleFavorite} sx={{ color: yellow[500] }}></StarBorder>)
+            :
+            (<Star onClick={fnHandleFavorite} sx={{ color: yellow[500] }}></Star>) 
+         }
             <S.HolidayName>{props.name}</S.HolidayName>
             <S.HolidayDate>{props.date}</S.HolidayDate>
         </S.HolidayCard>

@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Goal 
 
-The goal of the application is to rank your favorite vacations according to the country of your choice. 
+The goal of the application is to rank your favorite vacations according to the country and month of your choice. 
 
 ### `Requirements`
 

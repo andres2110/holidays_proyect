@@ -41,8 +41,14 @@ And in order to be able to update the variables, I used the useEffect and set it
 
 ### Favorites Information
 
-Since I bring the information from the API as the countries and months change, I chose to save the information in another array of favorites and not use the same array of holidaysAll of the global state of the application, because if I saved all the holidays that I asked to the API this was going to grow a lot, since there are countries like US that has as 24 holidays for each month, also this made it easier for me to manipulate the holiday data. The difficulty that I found was to synchronize the data, since in the main page, I had to have the favorite status in the holidaysAll. But well I found a way to do it, and whenever I make a new request to the API, I check that the holiday does not exist in the array of favoritesInfo, and if it exists I change the status of isFavorite so that it is updated. 
+Since I bring the information from the API as the countries and months change, I chose to save the information in another array of favorites and not use the same array of holidaysAll of the global state of the application, because if I saved all the holidays that I asked to the API this was going to grow a lot, since there are countries like US that has as 24 holidays for each month, also this made it easier for me to manipulate the holiday data. 
+
+The difficulty that I found was to synchronize the data, since in the main page, I had to have the favorite status in the holidaysAll. But well I found a way to do it, and whenever I make a new request to the API, I check that the holiday does not exist in the array of favoritesInfo, and if it exists I change the status of isFavorite so that it is updated. 
 
 
 ### Favorites Display
-This part was very difficult to decide, because I did not know the way I wanted to present the data and the best object to do it. The hard part was that I not only wanted to present the favorites, but I wanted to separate them by their country. So I opted to create a new array of objects that would have the necessary information to do this ( {country: 'EC', holidays: [] } ), I tried to use groupBy but I couldn't make it work, so I sorted it by the default countries.
+This part was very difficult to decide, because I did not know the way I wanted to present the data and the best object to do it.
+The hard part was that I not only wanted to present the favorites, but I wanted to separate them by their country. 
+So I opted to create a new array of objects that would have the necessary information to do this ( {country: 'EC', holidays: [] } ).
+
+I tried to use groupBy but I couldn't make it work, so I sorted it by the default countries.

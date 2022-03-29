@@ -23,7 +23,11 @@ The goal of the application is to rank your favorite vacations according to the 
  - react-dom | react-redux
  - react-router-dom
 
-Run npm start
+Step for use: 
+ 1. Register and get a API_KEY in Festivo from [docs.getfestivo.com/docs/before-you-start](docs.getfestivo.com/docs/before-you-start)     
+ 2. Change the API_KEY in src/resources/constants.js for that yours
+ 2. npm install
+ 3. npm start
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 ## Difficulties
